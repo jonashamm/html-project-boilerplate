@@ -1,0 +1,15 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "dependencies": {
+    "browser-sync": "*",
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-concat": "*",
+    "gulp-cssnano": "*",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "*",
+    "gulp-uglify": "^2.0.0",
+    "normalize.css": "^5.0.0"
+  }
+}

@@ -1,0 +1,54 @@
+/*
+List of breakpoints in px
+*/
+$breakpoints: 450 620 960 1200 1700;
+
+/*
+Copy this file into the folder where your main-scss-file is.
+Include this file in your main-scss-file like this:
+
+@import 'breakpoints';
+*/
+@mixin brp($name) {
+	@for $i from 1 through length($breakpoints) {
+		$px_value: nth($breakpoints, $i);
+
+		@if $name == 'b'+$i {
+			@media all and (min-width: #{$px_value/16}em) {
+				@content;
+			}
+		}
+		@if $name == 'b'+$i+'max' {
+			@media all and (max-width: #{$px_value/16 - 0.062}em) {
+				@content;
+			}
+		}
+	}
+}
+
+/*
+Now you can do e.g.:
+
+body {
+	@include brp(b2max) {
+		background-color:green;
+	}
+	@include brp(b4) {
+		background:red;
+	}
+}
+
+...which translates to:
+
+@media all and (max-width: 39.937em) {
+	body {
+		background-color: green;
+	}
+}
+
+@media all and (min-width: 60em) {
+    body {
+      background: red;
+  	}
+}
+*/

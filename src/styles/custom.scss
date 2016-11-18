@@ -1,0 +1,12 @@
+@import "colors";
+@import "breakpoints";
+
+body {
+	min-width: 320px;
+	color: $c-copy;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
