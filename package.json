@@ -7,9 +7,10 @@
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
     "gulp-cssnano": "*",
-    "gulp-rename": "^1.2.2",
+    "gulp-rename": "*",
     "gulp-sass": "*",
-    "gulp-uglify": "^2.0.0",
-    "normalize.css": "^5.0.0"
+    "gulp-svgmin": "*",
+    "gulp-uglify": "*",
+    "normalize.css": "*"
   }
 }

@@ -4,6 +4,7 @@ var gulp = require('gulp'),
 	cssnano = require('gulp-cssnano'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
+	svgmin = require('gulp-svgmin'),
 	uglify = require('gulp-uglify'),
 	autoprefixer = require('gulp-autoprefixer'),
 	browserSync = require('browser-sync').create();
@@ -54,11 +55,18 @@ gulp.task('compileJS',function() {
 		.pipe(browserSync.stream());
 });
 
+gulp.task('svgmin', function () {
+	return gulp.src( folderSrc + 'img/ui/*.svg')
+		.pipe(svgmin())
+		.pipe(gulp.dest(folderDist + 'img/ui/'))
+});
+
 gulp.task('watch', function() {
 	gulp.watch( folderSrc  + 'js/!**.*', ['compileJS']);
 	gulp.watch( folderSrc  + 'styles/**.*', ['sass']);
+	gulp.watch( folderSrc + 'img/ui/*.svg', ['svgmin']);
 	gulp.watch("*.html").on('change', browserSync.reload);
 });
 
 // Default Task
-gulp.task('default', ['browser-sync','sass', 'compileJS', 'watch']);
+gulp.task('default', ['browser-sync', 'sass', 'compileJS', 'svgmin', 'watch']);
