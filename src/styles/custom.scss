@@ -9,4 +9,22 @@ body {
 img {
 	max-width: 100%;
 	height: auto;
+	vertical-align: middle;
+}
+
+a {
+	color: inherit;
+}
+
+input,
+textarea,
+button {
+	font-family: inherit;
+}
+
+#__bs_notify__ {
+	font-size: .5em !important;
+	opacity: .2;
+	height: 1em;
+	overflow: hidden;
 }
