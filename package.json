@@ -11,6 +11,8 @@
     "gulp-sass": "*",
     "gulp-svgmin": "*",
     "gulp-uglify": "*",
-    "normalize.css": "*"
+    "normalize.css": "*",
+    "gulp-replace": "*",
+    "gulp-image-resize": "*"
   }
 }
