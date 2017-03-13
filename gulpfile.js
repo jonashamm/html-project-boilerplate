@@ -32,8 +32,9 @@ gulp.task('sass', function() {
 		.pipe(concat('all-styles.scss'))
 		.pipe(sass({style: 'compressed'}).on('error', sass.logError))
 		.pipe(autoprefixer({
-			browsers: ['last 2 versions'],
-			cascade: false
+			browsers: ['last 10 versions'],
+			cascade: false,
+			stats: { browsers: ["> 0.001%"]}
 		}))
 		// .pipe(cssnano()) // disable for development with big files
 		.pipe(rename({
