@@ -19,7 +19,7 @@ var folderSrc = 'src/',
 
 gulp.task('browser-sync', function() {
 	browserSync.init({
-		browser: "chromium-browser", // doesn't start chromium so far on my machine, but prevents firefox from starting :)
+		open: false,
 		proxy: "localhost"
 	});
 });
