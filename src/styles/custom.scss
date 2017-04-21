@@ -6,7 +6,8 @@ body {
 	color: $c-copy;
 }
 
-img {
+img,
+svg {
 	max-width: 100%;
 	height: auto;
 	vertical-align: middle;
@@ -29,10 +30,27 @@ button {
 	position: relative;
 }
 
+// smaller Browsersync-infos
 #__bs_notify__ {
-	font-size: .5em !important;
-	opacity: .2;
-	height: 1em;
+	font-size: 1em !important;
+	color: transparent !important;
+	opacity: .75;
+	height: 1.5em;
+	box-sizing: border-box;
+	width: 1.5em;
+	padding: 0 !important;
+	top: .5em !important;
+	right: .5em !important;
+	background-color: $c-go !important;
+	border-radius: 50% !important;
 	overflow: hidden;
-}
 
+	&:after {
+		content: 'BS';
+		position: absolute;
+		color: $c-negative;
+		top: .1em;
+		left: .25em;
+		font-size: .8em;
+	}
+}

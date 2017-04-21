@@ -7,7 +7,7 @@
 
 ## Enable browser caching
 <IfModule mod_expires.c>
-	ExpiresActive On
+	ExpiresActive O
 	ExpiresByType image/gif "access plus 7 days"
 	ExpiresByType image/ico "access plus 7 days"
 	ExpiresByType image/jpeg "access plus 7 days"

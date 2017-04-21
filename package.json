@@ -13,6 +13,8 @@
     "gulp-uglify": "*",
     "normalize.css": "*",
     "gulp-replace": "*",
-    "gulp-image-resize": "*"
+    "gulp-image-resize": "*",
+    "gulp-image": "*",
+    "gulp-real-favicon": "*"
   }
 }
