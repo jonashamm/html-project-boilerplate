@@ -48,9 +48,7 @@ gulp.task('sass', function() {
 			stats: { browsers: ["> 0.001%"]}
 		}))
 		// .pipe(cssnano()) // disable for development with big files
-		.pipe(rename({
-			suffix: ".min"
-		}))
+		// .pipe(rename({ suffix: ".min" }))
 		.pipe(gulp.dest(folderDist))
 		.pipe(browserSync.stream());
 });
@@ -61,9 +59,7 @@ gulp.task('compileJS',function() {
 	])
 		.pipe(concat('all-scripts.js'))
 		// .pipe(uglify())
-		.pipe(rename({
-			suffix: '.min'
-		}))
+		// .pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest(folderDist))
 		.pipe(browserSync.stream());
 });
@@ -75,7 +71,7 @@ gulp.task('svgmin', function () {
 });
 
 gulp.task('antiCache', function () {
-	return gulp.src('src/markup/index.php')
+	return gulp.src(folderSrc + 'markup/index.php')
 		.pipe(replace('antiCacheString', Date.now()))
 		.pipe(gulp.dest('dist'));
 });
@@ -94,7 +90,7 @@ gulp.task('default', ['browser-sync', 'sass', 'antiCache', 'compileJS', 'svgmin'
 /********************************************* Special Tasks *********************************************/
 // new image sizes
 function makeJpgVersions($width,$height,$suffix) {
-	gulp.src('src/img/*.jpg')
+	gulp.src(folderSrc + 'img/*.jpg')
 		.pipe(imageResize({
 			width : $width,
 			height : $height,
@@ -104,7 +100,7 @@ function makeJpgVersions($width,$height,$suffix) {
 		.pipe(rename({
 			suffix: $suffix
 		}))
-		.pipe(gulp.dest('dist/img'));
+		.pipe(gulp.dest(folderDist + 'dist/img'));
 }
 gulp.task('images', function () {
 	makeJpgVersions(640,525,"-small");
