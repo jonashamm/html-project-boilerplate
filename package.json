@@ -15,6 +15,9 @@
     "gulp-replace": "*",
     "gulp-image-resize": "*",
     "gulp-image": "*",
-    "gulp-real-favicon": "*"
+    "gulp-real-favicon": "*",
+    "babel-core": "*",
+    "gulp-babel": "*",
+    "babel-preset-es2015": "*"
   }
 }
