@@ -12,6 +12,7 @@ var gulp = require('gulp'),
 	image = require('gulp-image'),
 	realFavicon = require ('gulp-real-favicon'),
 	browserSync = require('browser-sync').create(),
+    	babel = require('gulp-babel'),
 	packagejson = require('./package.json');
 
 
