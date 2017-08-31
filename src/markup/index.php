@@ -13,8 +13,10 @@
 		</div>
 	</header>
 	<main>
-		<h1>Test Content</h1>
-		<p>This is only test content.</p>
+		<div class="inner">
+			<h1>Test Content</h1>
+			<p>This is only test content.</p>
+		</div>
 	</main>
 	<footer>
 		<div class="inner">
