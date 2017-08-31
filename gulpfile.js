@@ -95,7 +95,7 @@ gulp.task('watch', function() {
 });
 
 // Type in gulp on terminal/console to start standard tasks
-gulp.task('default', ['browser-sync', 'sass', 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
+gulp.task('default', ['antiCache', 'browser-sync', 'sass', 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
 
 
 /********************************************* Special Tasks *********************************************/
