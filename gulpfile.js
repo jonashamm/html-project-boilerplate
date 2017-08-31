@@ -53,13 +53,24 @@ gulp.task('sass', function() {
 		.pipe(browserSync.stream());
 });
 
-gulp.task('compileJS',function() {
+gulp.task('compileVendorJS',function() {
+	return gulp.src( [
+		'node_modules/jquery/dist/jquery.js'
+	])
+		.pipe(concat('vendor.combined.js'))
+		// .pipe(uglify())
+		.pipe(gulp.dest(folderDist))
+		.pipe(browserSync.stream());
+});
+gulp.task('compileCustomJS',function() {
 	return gulp.src( [
 		folderSrc + 'js/custom.js'
 	])
-		.pipe(concat('all-scripts.js'))
+		.pipe(concat('custom.compiled.js'))
+		.pipe(babel({
+			presets: ['es2015']
+		}))
 		// .pipe(uglify())
-		// .pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest(folderDist))
 		.pipe(browserSync.stream());
 });
@@ -77,14 +88,14 @@ gulp.task('antiCache', function () {
 });
 
 gulp.task('watch', function() {
-	gulp.watch( folderSrc  + 'js/**.*', ['compileJS','antiCache']);
+	gulp.watch( folderSrc  + 'js/**.*', ['compileCustomJS','antiCache']);
 	gulp.watch( folderSrc  + 'styles/**.*', ['sass','antiCache']);
 	gulp.watch( folderSrc + 'img/ui/*.svg', ['svgmin']);
 	gulp.watch("src/markup/*.php", ['antiCache']).on('change', browserSync.reload);
 });
 
 // Type in gulp on terminal/console to start standard tasks
-gulp.task('default', ['browser-sync', 'sass', 'antiCache', 'compileJS', 'svgmin', 'watch']);
+gulp.task('default', ['browser-sync', 'sass', 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
 
 
 /********************************************* Special Tasks *********************************************/
