@@ -1,5 +1,6 @@
 @import "colors";
 @import "breakpoints";
+@import "temp";
 
 body {
 	min-width: 320px;
@@ -28,29 +29,6 @@ button {
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
-}
-
-// smaller Browsersync-infos
-#__bs_notify__ {
-	font-size: 1em !important;
-	color: transparent !important;
-	opacity: .75;
-	height: 1.5em;
-	box-sizing: border-box;
-	width: 1.5em;
-	padding: 0 !important;
-	top: .5em !important;
-	right: .5em !important;
-	background-color: $c-go !important;
-	border-radius: 50% !important;
-	overflow: hidden;
-
-	&:after {
-		content: 'BS';
-		position: absolute;
-		color: $c-negative;
-		top: .1em;
-		left: .25em;
-		font-size: .8em;
-	}
+	padding-left:3.5%;
+	padding-right:3.5%;
 }
