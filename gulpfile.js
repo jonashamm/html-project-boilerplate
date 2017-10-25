@@ -5,14 +5,13 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
 	svgmin = require('gulp-svgmin'),
-	uglify = require('gulp-uglify'),
 	replace = require('gulp-replace'),
 	autoprefixer = require('gulp-autoprefixer'),
 	imageResize = require('gulp-image-resize'),
 	image = require('gulp-image'),
 	realFavicon = require ('gulp-real-favicon'),
 	browserSync = require('browser-sync').create(),
-    	babel = require('gulp-babel'),
+	shell = require('gulp-shell'),
 	packagejson = require('./package.json');
 
 
@@ -36,6 +35,10 @@ gulp.task('browser-sync', function() {
 	});
 });
 
+gulp.task('startWebpack', shell.task([
+	'webpack --watch'
+]));
+
 gulp.task('sass', function() {
 	return gulp.src([
 		'node_modules/normalize.css/normalize.css',
@@ -49,29 +52,6 @@ gulp.task('sass', function() {
 			stats: { browsers: ["> 0.001%"]}
 		}))
 		// .pipe(cssnano()) // disable for development with big files
-		// .pipe(rename({ suffix: ".min" }))
-		.pipe(gulp.dest(folderDist))
-		.pipe(browserSync.stream());
-});
-
-gulp.task('compileVendorJS',function() {
-	return gulp.src( [
-		'node_modules/jquery/dist/jquery.js'
-	])
-		.pipe(concat('vendor.combined.js'))
-		// .pipe(uglify())
-		.pipe(gulp.dest(folderDist))
-		.pipe(browserSync.stream());
-});
-gulp.task('compileCustomJS',function() {
-	return gulp.src( [
-		folderSrc + 'js/custom.js'
-	])
-		.pipe(concat('custom.compiled.js'))
-		.pipe(babel({
-			presets: ['es2015']
-		}))
-		// .pipe(uglify())
 		.pipe(gulp.dest(folderDist))
 		.pipe(browserSync.stream());
 });
@@ -89,14 +69,13 @@ gulp.task('antiCache', function () {
 });
 
 gulp.task('watch', function() {
-	gulp.watch( folderSrc  + 'js/**.*', ['compileCustomJS','antiCache']);
 	gulp.watch( folderSrc  + 'styles/**.*', ['sass','antiCache']);
 	gulp.watch( folderSrc + 'img/ui/*.svg', ['svgmin']);
 	gulp.watch("src/markup/*.php", ['antiCache']).on('change', browserSync.reload);
 });
 
 // Type in gulp on terminal/console to start standard tasks
-gulp.task('default', ['antiCache', 'browser-sync', 'sass', 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
+gulp.task('default', ['antiCache', 'browser-sync', 'sass', 'startWebpack', 'svgmin', 'watch']);
 
 
 /********************************************* Special Tasks *********************************************/
