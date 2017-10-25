@@ -23,7 +23,6 @@
 			Footer
 		</div>
 	</footer>
-<script src="dist/vendor.combined.js?version=antiCacheString"></script>	
-<script src="dist/custom.compiled.js?version=antiCacheString"></script>
+<script src="dist/bundle.js?version=antiCacheString"></script>
 </body>
 </html>
