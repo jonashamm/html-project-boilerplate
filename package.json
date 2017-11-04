@@ -16,6 +16,7 @@
     "gulp-image": "*",
     "gulp-real-favicon": "*",
     "gulp-shell":"*",
-    "webpack": "*"
+    "webpack": "*",
+    "jquery": "*"
   }
 }
