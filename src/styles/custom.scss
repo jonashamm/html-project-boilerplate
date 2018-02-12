@@ -33,3 +33,9 @@ button {
 	padding-left:3.5%;
 	padding-right:3.5%;
 }
+
+// Hide Vue-JS Elements on load:
+[v-show],
+[v-if] {
+	display: none;
+}
