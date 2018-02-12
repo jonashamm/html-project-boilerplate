@@ -57,15 +57,19 @@ gulp.task('sass', function() {
 });
 
 gulp.task('svgmin', function () {
-	return gulp.src( folderSrc + 'img/ui/*.svg')
-		.pipe(svgmin())
-		.pipe(gulp.dest(folderDist + 'img/ui/'))
+	return gulp.src( folderSrc + 'img/*.svg')
+		.pipe(svgmin({
+			plugins: [{
+				removeStyleElement: true
+			}]
+		}))
+		.pipe(gulp.dest(folderDist + 'img/'))
 });
 
 gulp.task('antiCache', function () {
 	return gulp.src(folderSrc + 'markup/index.php')
 		.pipe(replace('antiCacheString', Date.now()))
-		.pipe(gulp.dest('dist'));
+		.pipe(gulp.dest(folderDist));
 });
 
 gulp.task('watch', function() {
