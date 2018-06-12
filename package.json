@@ -14,8 +14,11 @@
     "gulp-replace": "*",
     "gulp-image-resize": "*",
     "gulp-image": "*",
+    "gulp-uglify": "*",
+    "gulp-babel": "*",
+    "babel-core": "*",
     "gulp-real-favicon": "*",
-    "gulp-shell":"*",
+    "gulp-shell": "*",
     "webpack": "*",
     "jquery": "*"
   }
