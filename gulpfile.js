@@ -35,10 +35,6 @@ gulp.task('browser-sync', function() {
 	});
 });
 
-gulp.task('startWebpack', shell.task([
-	'webpack --watch'
-]));
-
 gulp.task('sass', function() {
 	return gulp.src([
 		'node_modules/normalize.css/normalize.css',
@@ -56,6 +52,34 @@ gulp.task('sass', function() {
 		.pipe(browserSync.stream());
 });
 
+gulp.task('startWebpack', shell.task([
+	'webpack --watch'
+]));
+
+gulp.task('compileVendorJS',function() {
+	return gulp.src( [
+		'node_modules/jquery/dist/jquery.js',
+		'node_modules/vue/dist/vue.js',
+		'node_modules/axios/dist/axios.js',
+		'node_modules/owl.carousel/src/js/owl.carousel.js',
+		'node_modules/owl.carousel/dist/owl.carousel.js'
+	])
+		.pipe(concat('all-vendor-scripts.js'))
+		.pipe(uglify())
+		.pipe(gulp.dest(folderDist))
+		.pipe(browserSync.stream());
+});
+
+gulp.task('compileCustomJS',function() {
+	return gulp.src(folderSrc + 'js/custom.js')
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		// .pipe(uglify())
+		.pipe(gulp.dest(folderDist))
+		.pipe(browserSync.stream());
+});
+
 gulp.task('svgmin', function () {
 	return gulp.src( folderSrc + 'img/*.svg')
 		.pipe(svgmin({
@@ -66,11 +90,17 @@ gulp.task('svgmin', function () {
 		.pipe(gulp.dest(folderDist + 'img/'))
 });
 
-gulp.task('antiCache', function () {
-	return gulp.src(folderSrc + 'markup/index.php')
+gulp.task('antiCacheHead', function () {
+	return gulp.src(folderSrc + 'markup/head.php')
 		.pipe(replace('antiCacheString', Date.now()))
 		.pipe(gulp.dest(folderDist));
 });
+gulp.task('antiCacheFoot', function () {
+	return gulp.src(folderSrc + 'markup/foot.php')
+		.pipe(replace('antiCacheString', Date.now()))
+		.pipe(gulp.dest(folderDist));
+});
+
 
 gulp.task('watch', function() {
 	gulp.watch( folderSrc  + 'styles/**.*', ['sass','antiCache']);
@@ -79,7 +109,7 @@ gulp.task('watch', function() {
 });
 
 // Type in gulp on terminal/console to start standard tasks
-gulp.task('default', ['antiCache', 'browser-sync', 'sass', 'startWebpack', 'svgmin', 'watch']);
+gulp.task('default', ['antiCacheHead', 'antiCacheFoot', 'browser-sync', 'sass', /*'startWebpack', */ 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
 
 
 /********************************************* Special Tasks *********************************************/
