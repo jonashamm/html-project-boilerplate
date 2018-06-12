@@ -103,10 +103,12 @@ gulp.task('antiCacheFoot', function () {
 
 
 gulp.task('watch', function() {
-	gulp.watch( folderSrc  + 'styles/**.*', ['sass','antiCache']);
-	gulp.watch( folderSrc + 'img/ui/*.svg', ['svgmin']);
-	gulp.watch("src/markup/*.php", ['antiCache']).on('change', browserSync.reload);
+	gulp.watch( folderSrc  + 'styles/**.*', ['sass','antiCacheHead']);
+	gulp.watch( folderSrc  + 'js/**.*', ['compileCustomJS', 'antiCacheFoot']);
+	gulp.watch( folderSrc + 'img/*.svg', ['svgmin']);
+	gulp.watch( folderSrc + 'markup/*.php', ['antiCacheHead', 'antiCacheFoot']).on('change', browserSync.reload);
 });
+
 
 // Type in gulp on terminal/console to start standard tasks
 gulp.task('default', ['antiCacheHead', 'antiCacheFoot', 'browser-sync', 'sass', /*'startWebpack', */ 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
