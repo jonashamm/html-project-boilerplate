@@ -63,8 +63,6 @@ gulp.task('compileVendorJS',function() {
 		'node_modules/jquery/dist/jquery.js',
 		'node_modules/vue/dist/vue.js',
 		'node_modules/axios/dist/axios.js',
-		'node_modules/owl.carousel/src/js/owl.carousel.js',
-		'node_modules/owl.carousel/dist/owl.carousel.js'
 	])
 		.pipe(concat('all-vendor-scripts.js'))
 		.pipe(uglify())
