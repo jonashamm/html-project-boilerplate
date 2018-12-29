@@ -6,7 +6,7 @@
     "@babel/preset-env": "*",
     "babel-core": "*",
     "browser-sync": "*",
-    "gulp": "^3.9.0", // new syntax for Gulp 4 (need to rewrite gulpfile.js)
+    "gulp": "^3.9.0",
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
     "gulp-cssnano": "*",
