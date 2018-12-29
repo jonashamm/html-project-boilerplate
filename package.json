@@ -2,9 +2,11 @@
   "name": "project",
   "version": "0.5.0",
   "dependencies": {
-    "babel-preset-es2015": "*",
+    "@babel/core": "*",
+    "@babel/preset-env": "*",
+    "babel-core": "*",
     "browser-sync": "*",
-    "gulp": "*",
+    "gulp": "^3.9.0", // new syntax for Gulp 4 (need to rewrite gulpfile.js)
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
     "gulp-cssnano": "*",
@@ -17,10 +19,10 @@
     "gulp-image": "*",
     "gulp-uglify": "*",
     "gulp-babel": "*",
-    "babel-core": "*",
     "gulp-real-favicon": "*",
     "gulp-shell": "*",
     "webpack": "*",
-    "jquery": "*"
+    "jquery": "*",
+    "vue": "*"
   }
 }
