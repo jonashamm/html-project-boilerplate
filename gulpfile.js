@@ -11,9 +11,8 @@ var gulp = require('gulp'),
 	imageResize = require('gulp-image-resize'),
 	image = require('gulp-image'),
 	uglify = require('gulp-uglify'),
-	browserSync = require('browser-sync').create(),
-	shell = require('gulp-shell');
-
+	gulpCopy = require('gulp-copy'),
+	browserSync = require('browser-sync').create();
 
 /********************************************* Custom folder variables ***********************************/
 var folderSrc = 'src/',
@@ -30,10 +29,9 @@ gulp.task('browser-sync', function() {
 
 gulp.task('sass', function() {
 	return gulp.src([
-		'node_modules/normalize.css/normalize.css',
 		folderSrc + 'styles/custom.scss'
 	])
-		.pipe(concat('all-styles.scss'))
+		.pipe(concat('custom-compiled-from-sass.scss'))
 		.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError)) // possible outputStyles: nested, expanded, compact, compressed
 		.pipe(autoprefixer())
 		.pipe(gulp.dest(folderDist))
@@ -43,13 +41,13 @@ gulp.task('sass', function() {
 gulp.task('compileVendorJS',function() {
 	return gulp.src( [
 		'node_modules/jquery/dist/jquery.js',
-		'node_modules/vue/dist/vue.js',
-		'node_modules/axios/dist/axios.js',
+		// 'node_modules/vue/dist/vue.js',
+		// 'node_modules/axios/dist/axios.js',
 	])
-		.pipe(concat('all-vendor-scripts.js'))
-		.pipe(uglify())
-		.pipe(gulp.dest(folderDist))
-		.pipe(browserSync.stream());
+	.pipe(concat('all-vendor-scripts.js'))
+	.pipe(uglify())
+	.pipe(gulp.dest(folderDist))
+	.pipe(browserSync.stream());
 });
 
 gulp.task('compileCustomJS',function() {
@@ -85,6 +83,11 @@ gulp.task('antiCacheFoot', function () {
 		.pipe(gulp.dest(folderDist));
 });
 
+gulp.task('copyCssNormalize', function () {
+	return gulp.src('node_modules/modern-normalize/modern-normalize.css')
+		.pipe(gulpCopy(folderDist))
+});
+
 
 gulp.task('watch', function() {
 	gulp.watch( folderSrc  + 'styles/**.*', ['sass','antiCacheHead']);
@@ -95,7 +98,7 @@ gulp.task('watch', function() {
 
 
 // Type in gulp on terminal/console to start standard tasks
-gulp.task('default', ['antiCacheHead', 'antiCacheFoot', 'browser-sync', 'sass', 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
+gulp.task('default', ['copyCssNormalize','antiCacheHead', 'antiCacheFoot', 'browser-sync', 'sass', 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
 
 
 /********************************************* Special Tasks *********************************************/
