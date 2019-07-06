@@ -12,8 +12,7 @@ var gulp = require('gulp'),
 	image = require('gulp-image'),
 	uglify = require('gulp-uglify'),
 	browserSync = require('browser-sync').create(),
-	shell = require('gulp-shell'),
-	packagejson = require('./package.json');
+	shell = require('gulp-shell');
 
 
 /********************************************* Custom folder variables ***********************************/
@@ -36,19 +35,10 @@ gulp.task('sass', function() {
 	])
 		.pipe(concat('all-styles.scss'))
 		.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError)) // possible outputStyles: nested, expanded, compact, compressed
-		.pipe(autoprefixer({
-			browsers: ['last 15 versions'],
-			cascade: false,
-			stats: { browsers: ["> 0.001%"]}
-		}))
-		// .pipe(cssnano()) // disable for development with big files
+		.pipe(autoprefixer())
 		.pipe(gulp.dest(folderDist))
 		.pipe(browserSync.stream());
 });
-
-gulp.task('startWebpack', shell.task([
-	'webpack --watch'
-]));
 
 gulp.task('compileVendorJS',function() {
 	return gulp.src( [
@@ -105,7 +95,7 @@ gulp.task('watch', function() {
 
 
 // Type in gulp on terminal/console to start standard tasks
-gulp.task('default', ['antiCacheHead', 'antiCacheFoot', 'browser-sync', 'sass', /*'startWebpack', */ 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
+gulp.task('default', ['antiCacheHead', 'antiCacheFoot', 'browser-sync', 'sass', 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
 
 
 /********************************************* Special Tasks *********************************************/

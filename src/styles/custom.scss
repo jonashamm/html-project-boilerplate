@@ -1,4 +1,4 @@
-
+// Keep first line empty from real code due to scss-compiler bug
 @import "colors";
 @import "breakpoints";
 @import "snippets";
@@ -49,5 +49,7 @@ body {
 	flex-direction: column;
 }
 main {
-	flex: 1;
+	flex: 1 0 auto;
+
 }
+
