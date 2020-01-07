@@ -5,14 +5,16 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
 	svgmin = require('gulp-svgmin'),
-	babel = require('gulp-babel'),
+	uglify = require('gulp-uglify'),
 	replace = require('gulp-replace'),
+	babel = require('gulp-babel'),
 	autoprefixer = require('gulp-autoprefixer'),
 	imageResize = require('gulp-image-resize'),
+	browserSync = require('browser-sync').create(),
 	image = require('gulp-image'),
-	uglify = require('gulp-uglify'),
-	gulpCopy = require('gulp-copy'),
-	browserSync = require('browser-sync').create();
+	exec = require('gulp-exec');
+var exec = require('child_process').exec;
+
 
 /********************************************* Custom folder variables ***********************************/
 var folderSrc = 'src/',
@@ -20,14 +22,29 @@ var folderSrc = 'src/',
 
 /********************************************* Default Tasks *********************************************/
 
-gulp.task('browser-sync', function() {
+function startBrowsersync() {
 	browserSync.init({
 		open: false,
 		proxy: "localhost"
 	});
-});
+}
+function startBrowsersyncLaravel() {
+	browserSync.init({
+		open: false,
+		ghostMode: false,
+		proxy: {
+			target: '0.0.0.0:8000',
+			reqHeaders: function() {
+				return {
+					host: 'localhost:3000'
+				};
+			}
+		}
+	});
+}
 
-gulp.task('sass', function() {
+
+function sassFunction() {
 	return gulp.src([
 		folderSrc + 'styles/custom.scss'
 	])
@@ -36,9 +53,9 @@ gulp.task('sass', function() {
 		.pipe(autoprefixer())
 		.pipe(gulp.dest(folderDist))
 		.pipe(browserSync.stream());
-});
+}
 
-gulp.task('compileVendorJS',function() {
+function compileVendorJS() {
 	return gulp.src( [
 		'node_modules/jquery/dist/jquery.js',
 		// 'node_modules/vue/dist/vue.js',
@@ -48,9 +65,9 @@ gulp.task('compileVendorJS',function() {
 	.pipe(uglify())
 	.pipe(gulp.dest(folderDist))
 	.pipe(browserSync.stream());
-});
+}
 
-gulp.task('compileCustomJS',function() {
+function compileCustomJS() {
 	return gulp.src([
 		folderSrc + 'js/custom.js'
 	])
@@ -60,9 +77,9 @@ gulp.task('compileCustomJS',function() {
 		}))
 		.pipe(gulp.dest(folderDist))
 		.pipe(browserSync.stream());
-});
+}
 
-gulp.task('svgmin', function () {
+function svgmin() {
 	return gulp.src( folderSrc + 'img/*.svg')
 		.pipe(svgmin({
 			plugins: [{
@@ -70,61 +87,34 @@ gulp.task('svgmin', function () {
 			}]
 		}))
 		.pipe(gulp.dest(folderDist + 'img/'))
-});
+}
 
-gulp.task('antiCacheHead', function () {
+function antiCacheHead() {
 	return gulp.src(folderSrc + 'markup/head.php')
 		.pipe(replace('antiCacheString', Date.now()))
 		.pipe(gulp.dest(folderDist));
-});
-gulp.task('antiCacheFoot', function () {
+}
+function antiCacheFoot() {
 	return gulp.src(folderSrc + 'markup/foot.php')
 		.pipe(replace('antiCacheString', Date.now()))
 		.pipe(gulp.dest(folderDist));
-});
+}
 
-gulp.task('copyCssNormalize', function () {
+function copyCssNormalize() {
 	return gulp.src('node_modules/modern-normalize/modern-normalize.css')
 		.pipe(gulpCopy(folderDist))
-});
-
-
-gulp.task('watch', function() {
-	gulp.watch( folderSrc  + 'styles/**.*', ['sass','antiCacheHead']);
-	gulp.watch( folderSrc  + 'js/**.*', ['compileCustomJS', 'antiCacheFoot']);
-	gulp.watch( folderSrc + 'img/*.svg', ['svgmin']);
-	gulp.watch( folderSrc + 'markup/*.php', ['antiCacheHead', 'antiCacheFoot']).on('change', browserSync.reload);
-});
-
-
-// Type in gulp on terminal/console to start standard tasks
-gulp.task('default', ['copyCssNormalize','antiCacheHead', 'antiCacheFoot', 'browser-sync', 'sass', 'compileVendorJS', 'compileCustomJS', 'svgmin', 'watch']);
-
-
-/********************************************* Special Tasks *********************************************/
-// new image sizes
-function makeJpgVersions($width,$height,$suffix) {
-	gulp.src(folderSrc + 'img/*.jpg')
-		.pipe(imageResize({
-			width : $width,
-			height : $height,
-			crop : true,
-			upscale : true
-		}))
-		.pipe(rename({
-			suffix: $suffix
-		}))
-		.pipe(gulp.dest(folderDist + 'dist/img'));
 }
-gulp.task('images', function () {
-	makeJpgVersions(640,525,"-small");
-	makeJpgVersions(1280,570,"-middle");
-	makeJpgVersions(1920,670,"-big");
-});
 
-// Optimize images with by google recommended filters
-gulp.task('imageOptim', function () {
-	gulp.src( folderSrc + 'images/**/*.jpg' )
-		.pipe(image())
-		.pipe(gulp.dest( folderDist + 'images' ));
-});
+
+const { watch, series, parallel } = require('gulp');
+const startCompile = gulp.parallel(compileVendorJS, sassFunction, compileCustomJS, antiCacheHead, antiCacheFoot);
+const startBrowsersync1 = startBrowsersync;
+
+exports.default = function() {
+	startCompile();
+	startBrowsersync1();
+	watch(folderSrc + 'styles/*.scss', parallel(sassFunction, antiCacheHead));
+	watch( folderSrc  + 'js/**.*', parallel(compileCustomJS, antiCacheFoot));
+	watch( folderSrc + 'images/!*.svg', parallel(svgmin));
+	watch(folderSrc + 'markup/*.php', parallel(antiCacheHead,antiCacheFoot));
+};

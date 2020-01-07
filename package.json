@@ -6,7 +6,7 @@
     "@babel/preset-env": "*",
     "babel-core": "*",
     "browser-sync": "*",
-    "gulp": "^3.9.0",
+    "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-babel": "*",
     "gulp-concat": "*",
@@ -29,5 +29,8 @@
   "browserslist": [
     "last 10 version",
     "> 0.5%"
-  ]
+  ],
+  "dependencies": {
+    "gulp-exec": "^4.0.0"
+  }
 }
