@@ -9,11 +9,7 @@ var gulp = require('gulp'),
 	replace = require('gulp-replace'),
 	babel = require('gulp-babel'),
 	autoprefixer = require('gulp-autoprefixer'),
-	imageResize = require('gulp-image-resize'),
-	browserSync = require('browser-sync').create(),
-	image = require('gulp-image'),
-	exec = require('gulp-exec');
-var exec = require('child_process').exec;
+	browserSync = require('browser-sync').create();
 
 
 /********************************************* Custom folder variables ***********************************/
@@ -42,7 +38,15 @@ function startBrowsersyncLaravel() {
 		}
 	});
 }
-
+function cssVendors() {
+	return gulp.src([
+		'node_modules/modern-normalize/modern-normalize.css'
+	])
+		.pipe(concat('vendor-css.scss'))
+		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) // possible outputStyles: nested, expanded, compact, compressed
+		.pipe(gulp.dest(folderDist))
+		.pipe(browserSync.stream());
+}
 
 function sassFunction() {
 	return gulp.src([
@@ -58,13 +62,12 @@ function sassFunction() {
 function compileVendorJS() {
 	return gulp.src( [
 		'node_modules/jquery/dist/jquery.js',
-		// 'node_modules/vue/dist/vue.js',
 		// 'node_modules/axios/dist/axios.js',
 	])
-	.pipe(concat('all-vendor-scripts.js'))
-	.pipe(uglify())
-	.pipe(gulp.dest(folderDist))
-	.pipe(browserSync.stream());
+		.pipe(concat('all-vendor-scripts.js'))
+		.pipe(uglify())
+		.pipe(gulp.dest(folderDist))
+		.pipe(browserSync.stream());
 }
 
 function compileCustomJS() {
@@ -107,7 +110,7 @@ function copyCssNormalize() {
 
 
 const { watch, series, parallel } = require('gulp');
-const startCompile = gulp.parallel(compileVendorJS, sassFunction, compileCustomJS, antiCacheHead, antiCacheFoot);
+const startCompile = gulp.parallel(compileVendorJS, sassFunction, compileCustomJS, antiCacheHead, antiCacheFoot, cssVendors);
 const startBrowsersync1 = startBrowsersync;
 
 exports.default = function() {
