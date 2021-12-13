@@ -1,32 +1,31 @@
 {
-  "name": "project",
-  "version": "0.5.0",
+  "name": "poseidon",
+  "version": "1.0.0",
   "devDependencies": {
-    "@babel/core": "^7.11.1",
-    "@babel/preset-env": "^7.11.0",
-    "babel-core": "*",
-    "browser-sync": "^2.26.12",
+    "@babel/core": "*",
+    "@babel/preset-env": "*",
+    "babel-preset-es2015": "*",
+    "browser-sync": "*",
+    "caniuse-lite": "*",
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-babel": "*",
     "gulp-concat": "*",
-    "gulp-copy": "*",
-    "gulp-cssnano": "*",
-    "gulp-real-favicon": "*",
-    "gulp-rename": "*",
     "gulp-replace": "*",
-    "gulp-sass": "^4.1.0",
-    "gulp-svgmin": "^3.0.0",
+    "gulp-sass": "*",
+    "gulp-svgmin": "*",
     "gulp-uglify": "*",
-    "jquery": "^3.5.1",
-    "modern-normalize": "^0.7.0",
-    "vue": "*"
+    "modern-normalize": "*",
+    "sass": "*"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "gulp-sourcemaps": "^3.0.0",
+    "jquery": "*",
+    "slick-carousel": "*"
   },
   "browserslist": [
     "last 10 version",
     "> 0.5%"
-  ],
-  "dependencies": {
-    "gulp-exec": "^4.0.0"
-  }
+  ]
 }

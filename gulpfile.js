@@ -1,20 +1,20 @@
 /********************************************* NPM Modules **********************************************/
 var gulp = require('gulp'),
-	sass = require('gulp-sass'),
-	cssnano = require('gulp-cssnano'),
+	fs = require('fs'),
+	sass = require('gulp-sass')(require('sass')),
 	concat = require('gulp-concat'),
-	rename = require('gulp-rename'),
 	svgmin = require('gulp-svgmin'),
 	uglify = require('gulp-uglify'),
 	replace = require('gulp-replace'),
 	babel = require('gulp-babel'),
 	autoprefixer = require('gulp-autoprefixer'),
+	sourcemaps = require('gulp-sourcemaps'),
 	browserSync = require('browser-sync').create();
 
 
 /********************************************* Custom folder variables ***********************************/
-var folderSrc = 'src/',
-	folderDist = 'dist/';
+var folderSrc = 'site/templates/src/',
+	folderDist = 'site/templates/dist/';
 
 /********************************************* Default Tasks *********************************************/
 
@@ -24,23 +24,10 @@ function startBrowsersync() {
 		proxy: "localhost"
 	});
 }
-function startBrowsersyncLaravel() {
-	browserSync.init({
-		open: false,
-		ghostMode: false,
-		proxy: {
-			target: '0.0.0.0:8000',
-			reqHeaders: function() {
-				return {
-					host: 'localhost:3000'
-				};
-			}
-		}
-	});
-}
 function cssVendors() {
 	return gulp.src([
-		'node_modules/modern-normalize/modern-normalize.css'
+		'node_modules/modern-normalize/modern-normalize.css',
+		'node_modules/slick-carousel/slick/slick.css'
 	])
 		.pipe(concat('vendor-css.scss'))
 		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) // possible outputStyles: nested, expanded, compact, compressed
@@ -52,9 +39,11 @@ function sassFunction() {
 	return gulp.src([
 		folderSrc + 'styles/custom.scss'
 	])
+		.pipe(sourcemaps.init())
 		.pipe(concat('custom-compiled-from-sass.scss'))
 		.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError)) // possible outputStyles: nested, expanded, compact, compressed
 		.pipe(autoprefixer())
+		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(folderDist))
 		.pipe(browserSync.stream());
 }
@@ -62,7 +51,8 @@ function sassFunction() {
 function compileVendorJS() {
 	return gulp.src( [
 		'node_modules/jquery/dist/jquery.js',
-		// 'node_modules/axios/dist/axios.js',
+		'node_modules/slick-carousel/slick/slick.min.js',
+		'node_modules/slick-carousel/slick/slick.min.js'
 	])
 		.pipe(concat('all-vendor-scripts.js'))
 		.pipe(uglify())
@@ -92,32 +82,19 @@ function svgmin() {
 		.pipe(gulp.dest(folderDist + 'img/'))
 }
 
-function antiCacheHead() {
-	return gulp.src(folderSrc + 'markup/head.php')
-		.pipe(replace('antiCacheString', Date.now()))
-		.pipe(gulp.dest(folderDist));
+function antiCache(cb) {
+	return fs.writeFile(folderSrc + 'version/nr.txt', new Date().toJSON(), cb);
 }
-function antiCacheFoot() {
-	return gulp.src(folderSrc + 'markup/foot.php')
-		.pipe(replace('antiCacheString', Date.now()))
-		.pipe(gulp.dest(folderDist));
-}
-
-function copyCssNormalize() {
-	return gulp.src('node_modules/modern-normalize/modern-normalize.css')
-		.pipe(gulpCopy(folderDist))
-}
-
 
 const { watch, series, parallel } = require('gulp');
-const startCompile = gulp.parallel(compileVendorJS, sassFunction, compileCustomJS, antiCacheHead, antiCacheFoot, cssVendors);
+const startCompile = gulp.parallel(compileVendorJS, sassFunction, compileCustomJS, antiCache, cssVendors);
 const startBrowsersync1 = startBrowsersync;
 
 exports.default = function() {
 	startCompile();
 	startBrowsersync1();
-	watch(folderSrc + 'styles/*.scss', parallel(sassFunction, antiCacheHead));
-	watch( folderSrc  + 'js/**.*', parallel(compileCustomJS, antiCacheFoot));
+	watch(folderSrc + 'styles/*.scss', parallel(sassFunction, antiCache));
+	watch( folderSrc  + 'js/**.*', parallel(compileCustomJS, antiCache));
 	watch( folderSrc + 'images/!*.svg', parallel(svgmin));
-	watch(folderSrc + 'markup/*.php', parallel(antiCacheHead,antiCacheFoot));
+	watch(folderSrc + 'markup/*.php', parallel(antiCache));
 };

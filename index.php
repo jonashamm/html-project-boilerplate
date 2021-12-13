@@ -1,4 +1,5 @@
-<?php include('dist/head.php'); ?>
+<?php $version = file_get_contents('version_nr.txt');?>
+<?php include('src/markup/head.php'); ?>
 <header>
 	<div class="inner">
 		Header
@@ -15,4 +16,4 @@
 		Footer
 	</div>
 </footer>
-<?php include('dist/foot.php'); ?>
+<?php include('src/markup/foot.php'); ?>
