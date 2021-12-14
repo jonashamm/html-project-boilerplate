@@ -13,8 +13,8 @@ var gulp = require('gulp'),
 
 
 /********************************************* Custom folder variables ***********************************/
-var folderSrc = 'site/templates/src/',
-	folderDist = 'site/templates/dist/';
+var folderSrc = 'src/',
+	folderDist = 'dist/';
 
 /********************************************* Default Tasks *********************************************/
 
@@ -83,7 +83,7 @@ function svgmin() {
 }
 
 function antiCache(cb) {
-	return fs.writeFile(folderSrc + 'version/nr.txt', new Date().toJSON(), cb);
+	return fs.writeFile('version_nr.txt', new Date().toJSON(), cb);
 }
 
 const { watch, series, parallel } = require('gulp');
