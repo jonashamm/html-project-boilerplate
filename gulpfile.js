@@ -83,7 +83,7 @@ function svgmin() {
 }
 
 function antiCache(cb) {
-	return fs.writeFile('version_nr.txt', new Date().toJSON(), cb);
+	return fs.writeFile('version_nr.txt', (new Date().getTime()).toString(), cb);
 }
 
 const { watch, series, parallel } = require('gulp');
