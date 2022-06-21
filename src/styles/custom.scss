@@ -5,340 +5,35 @@
 @import "temp";
 
 body {
- 	min-width: 320px;
-	font-family: 'Open Sans', sans-serif;
-	color:$c-negative;
-	overflow-x: hidden;
-}
+	background-image:none;
+	background-color:#efefef;
 
+	color:$c-main2;
+	text-shadow: none;
+}
 h1,
 h2,
-h3 {
-	text-shadow: .02em .02em .1em rgba($c-darkest,.25);
-	line-height: 1.1em;
-	font-family: 'Montserrat', sans-serif;
-}
-h1 {
-	@include brp(b2) {
-		font-size:5.5em;
-		max-width:70%;
-	}
-
-	@include brp(b5) {
-		text-indent: -1em;
-	}
-}
-h1,
-h2 {
-	span {
-		background: linear-gradient(35deg, $c-accent, $c-secondary);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		text-shadow: none;
-	}
-}
-.component {
-	margin-bottom:7em;
-}
-body,
-p,
-li {
-	line-height: 1.8em;
-}
-p,
-li {
-	font-size: 1.1em;
-}
-
-img,
-svg,
-video,
-iframe {
-	max-width: 100%;
-	height: auto;
-	vertical-align: middle;
-}
-
-a {
-	color: inherit;
-}
-
-input,
-textarea,
-button {
-	font-family: inherit;
-}
-
-.inner {
-	max-width: 90em;
-	margin-left: auto;
-	margin-right: auto;
-	position: relative;
-	padding-left:3.5%;
-	padding-right:3.5%;
-}
-
-// Hide Vue-JS Elements on load:
-[v-show],
-[v-if] {
-	display: none;
-}
-
-// Sticky Footer
-body {
-	display: flex;
-	min-height: 100vh;
-	flex-direction: column;
-}
-main {
-	flex: 1 0 auto;
-}
-
-body {
-	background-image:linear-gradient(135deg, $c-main, $c-secondary);
-
-}
-.header-inner {
-	padding:2em 0;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom:4em;
-
-	.logo {
-		width:12em;
-		opacity: .8;
-
-		path {
-			fill:$c-negative !important;
-		}
-		#block {
-			opacity: .6;
-		}
-	}
-	nav {
-		a {
-			padding:.5em 1em;
-			text-decoration: none;
-			font-weight: 600;
-			font-family:'Montserrat',sans-serif;
-			font-size:1.2em;
-		}
-	}
-}
-.inner-special {
-	background-image: linear-gradient(to right, rgba($c-negative,1) 70%, transparent 70%);
-
-	&.from-right {
-		background-image: linear-gradient(to left, rgba($c-negative,1) 70%, transparent 70%);
-		margin-bottom:1em;
-	}
-}
-.block {
-	color:$c-copy;
-	box-sizing: border-box;
-	border-radius:.3em;
-	// box-shadow:.5em .5em .5em rgba($c-darkest,.1);
-	background-color: $c-negative;
-	position: relative;
-
-	&:before {
-		@include overlay;
-		background: linear-gradient(35deg, transparent, $c-accent, $c-secondary);
-		height:5px;
-		width:150%;
-		margin-left:-50%;
-		z-index: 5;
-
-		.from-right & {
-			background: linear-gradient(-85deg, transparent, $c-accent, $c-secondary);
-			width:150%;
-			margin-right:-50%;
-			left:auto;
-			right:0;
-		}
-	}
-}
-.block-inner {
-	display: flex;
-
-
-	.image-container {
-		flex:0 0 25%;
-		background-size: cover;
-		position: relative;
-		order:2;
-
-		.from-right & {
-			order:0;
-
-			&:before {
-				background-image:linear-gradient(rgba($c-secondary,.5), rgba($c-accent,.8));
-			}
-		}
-
-		&:before {
-			@include overlay;
-			background-color: transparent;
-			background-image:linear-gradient(rgba($c-secondary,.5), rgba($c-accent,.8));
-		}
-
-		&.full {
-			img {
-				width:100%;
-				height:100%;
-				object-fit: cover;
-			}
-		}
-	}
-
-	path {
-		fill:$c-secondary;
-	}
-	.text {
-		padding:4em;
-	}
-	h2 {
-		color:lighten($c-copy,15);
-		text-shadow: none;
-		line-height: 1.4em;
-	}
-
-	.textblock {
-		display: flex;
-		align-items: center;
-
-		.icon-block {
-			margin-right:5%;
-			flex:0 0  20%;
-		}
-
-		&:nth-child(3) {
-			path {
-				// fill:darken($c-accent,10) !important;
-			}
-		}
-	}
-}
-footer {
-	padding:1em 0;
-	background: linear-gradient(35deg, $c-accent, $c-secondary);
-	color:$c-negative;
-	text-align: right;
-	font-weight: bold;
-	text-shadow: 1px 1px 3px rgba($c-darkest,.35);
-
-	a {
-		padding:0 .5em;
-		display: inline-block;
-		text-decoration: none;
-
-	}
+h3,
+h4 {
+	font-family:'Open Sans';
+	text-shadow: none;
 }
 .particles-js {
-	width:100%;
-	position: fixed;
-	top:0;
-	left:0;
-	height:100%;
+	opacity: .4;
 }
-.steps {
-	display: flex;
-	align-items: center;
-
-	.step {
-		flex:0 0  22%;
-		text-align: center;
-		font-weight: 600;
-		letter-spacing: .035em;
-		font-family: 'Montserrat';
-
-		&:first-child {
-			.icon-container {
-				position:relative;
-				top:3em;
+.header-inner {
+	.logo {
+		svg {
+			path {
+				fill:$c-main2 !important;
 			}
 		}
 
-
-		.text {
-			min-height:6em;
-		}
-	}
-	h3 {
-		font-size:3em;
-	}
-
-	.step-between {
-		flex:0 0 5%;
-		svg {
-			position: relative;
-			top:1em;
-			width:5em;
-		}
-	}
-
-	svg {
-		width:6em;
-
-		path {
-			fill:$c-negative;
-		}
 	}
 }
-.main-head {
-	font-size:4em;
+.steps svg path {
+	fill:$c-secondary;
 }
-.form-items-wrapper {
-	display: flex;
-
-	> * {
-		flex: 0 0 calc(50% - 1em);
-	}
-	label {
-		display: block;
-	}
-
-}
-
-.form-item {
-	margin: 0 1em 3em 0;
-}
-input,
-textarea {
-	background-color: transparent;
-	width:100%;
-	border:2px solid $c-negative;
-	border-radius: .25em;
-	color:inherit;
-	font-size:1.25em;
-	padding:.75em 1.25em;
-	outline:none;
-
-	&:focus {
-		background-color: rgba($c-darkest,.2);
-	}
-}
-label {
-	font-weight: bold;
-	font-family: 'Montserrat';
-	font-size:1.25em;
-}
-button {
-	background: linear-gradient(35deg, $c-accent, $c-secondary);
-	font-size: 1.5em;
-	border:0;
-	border-radius: .25em;
-	padding:.75em 1em;
-	color:$c-negative;
-	font-family: 'Montserrat';
-	font-weight: 900;
-	text-shadow: 1px 1px 3px rgba($c-darkest,.5);
-	cursor: pointer;
-	transition:transform .2s;
-
-	&:hover,
-	&:focus {
-		transform: scale(1.1);
-	}
+input, textarea {
+	border-color:$c-main2;
 }
