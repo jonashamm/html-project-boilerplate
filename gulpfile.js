@@ -27,7 +27,6 @@ function startBrowsersync() {
 function cssVendors() {
 	return gulp.src([
 		'node_modules/modern-normalize/modern-normalize.css',
-		'node_modules/slick-carousel/slick/slick.css'
 	])
 		.pipe(concat('vendor-css.scss'))
 		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) // possible outputStyles: nested, expanded, compact, compressed
@@ -51,8 +50,7 @@ function sassFunction() {
 function compileVendorJS() {
 	return gulp.src( [
 		'node_modules/jquery/dist/jquery.js',
-		'node_modules/slick-carousel/slick/slick.min.js',
-		'node_modules/slick-carousel/slick/slick.min.js'
+		'src/js/particles.min.js',
 	])
 		.pipe(concat('all-vendor-scripts.js'))
 		.pipe(uglify())
@@ -83,7 +81,7 @@ function svgmin() {
 }
 
 function antiCache(cb) {
-	return fs.writeFile('version_nr.txt', (new Date().getTime()).toString(), cb);
+	return fs.writeFile('dist/version_nr.txt', (new Date().getTime()).toString(), cb);
 }
 
 const { watch, series, parallel } = require('gulp');

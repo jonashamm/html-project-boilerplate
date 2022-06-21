@@ -1,5 +1,5 @@
 {
-  "name": "poseidon",
+  "name": "aotb",
   "version": "1.0.0",
   "devDependencies": {
     "@babel/core": "*",
@@ -7,7 +7,7 @@
     "babel-preset-es2015": "*",
     "browser-sync": "*",
     "caniuse-lite": "*",
-    "gulp": "*",
+    "gulp": "4.*",
     "gulp-autoprefixer": "*",
     "gulp-babel": "*",
     "gulp-concat": "*",
@@ -21,8 +21,7 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "gulp-sourcemaps": "^3.0.0",
-    "jquery": "*",
-    "slick-carousel": "*"
+    "jquery": "*"
   },
   "browserslist": [
     "last 10 version",

@@ -1,3 +1,6 @@
 $(document).ready(function() {
-	console.log('jquery loaded');
+
+});
+particlesJS.load('particles-js', 'src/js/particlesjs-config.json', function() {
+	console.log('callback - particles.js config loaded');
 });
