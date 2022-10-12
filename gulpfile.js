@@ -50,7 +50,6 @@ function sassFunction() {
 function compileVendorJS() {
 	return gulp.src( [
 		'node_modules/jquery/dist/jquery.js',
-		'src/js/particles.min.js',
 	])
 		.pipe(concat('all-vendor-scripts.js'))
 		.pipe(uglify())
