@@ -6,35 +6,51 @@
 @import "nav-main";
 
 body {
-	background-image:none;
-	background-color:#efefef;
+	min-width: 320px;
+	color: $c-copy;
+}
 
-	color:$c-main2;
-	text-shadow: none;
+img,
+svg,
+video,
+iframe {
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
 }
-h1,
-h2,
-h3,
-h4 {
-	font-family:'Open Sans';
-	text-shadow: none;
-}
-.particles-js {
-	opacity: .4;
-}
-.header-inner {
-	.logo {
-		svg {
-			path {
-				fill:$c-main2 !important;
-			}
-		}
 
-	}
+a {
+	color: inherit;
 }
-.steps svg path {
-	fill:$c-secondary;
+
+input,
+textarea,
+button {
+	font-family: inherit;
 }
-input, textarea {
-	border-color:$c-main2;
+
+.inner {
+	max-width: 90em;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	padding-left:3.5%;
+	padding-right:3.5%;
 }
+
+// Hide Vue-JS Elements on load:
+[v-show],
+[v-if] {
+	display: none;
+}
+
+// Sticky Footer
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+main {
+	flex: 1 0 auto;
+}
+
